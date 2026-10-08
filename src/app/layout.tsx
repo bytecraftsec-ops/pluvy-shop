@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CartProvider } from "@/context/CartContext";
 
 export const metadata: Metadata = {
   title: "Pluvy Shop | Produtos Digitais",
@@ -14,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className="antialiased min-h-screen bg-[#0a0a0a] text-white">
-        {children}
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );
