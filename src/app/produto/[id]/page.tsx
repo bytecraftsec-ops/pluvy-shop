@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { getProduct, Variant } from "@/lib/products";
+import { getProduct, Variant, Product } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
 import Link from "next/link";
 import { useState } from "react";
@@ -13,9 +13,6 @@ export default function ProductPage() {
   const [added, setAdded] = useState(false);
 
   const product = getProduct(params.id as string);
-  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(
-    product?.variants?.[0] || null
-  );
 
   if (!product) {
     return (
@@ -30,6 +27,28 @@ export default function ProductPage() {
     );
   }
 
+  return <ProductContent product={product} addToCart={addToCart} count={count} router={router} added={added} setAdded={setAdded} />;
+}
+
+function ProductContent({
+  product,
+  addToCart,
+  count,
+  router,
+  added,
+  setAdded,
+}: {
+  product: Product;
+  addToCart: (p: Product) => void;
+  count: number;
+  router: ReturnType<typeof useRouter>;
+  added: boolean;
+  setAdded: (v: boolean) => void;
+}) {
+  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(
+    product.variants?.[0] || null
+  );
+
   const currentPrice = selectedVariant?.price ?? product.price;
   const currentName = selectedVariant
     ? `${product.name} — ${selectedVariant.name}`
@@ -40,7 +59,7 @@ export default function ProductPage() {
   }
 
   function handleAddToCart() {
-    const itemToAdd = {
+    const itemToAdd: Product = {
       ...product,
       id: selectedVariant?.id || product.id,
       name: currentName,
@@ -52,7 +71,7 @@ export default function ProductPage() {
   }
 
   function handleBuyNow() {
-    const itemToAdd = {
+    const itemToAdd: Product = {
       ...product,
       id: selectedVariant?.id || product.id,
       name: currentName,
@@ -96,7 +115,6 @@ export default function ProductPage() {
         </Link>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Image */}
           <div className="bg-[#111] border border-[#1f1f1f] rounded-2xl overflow-hidden aspect-square flex items-center justify-center">
             <img
               src={product.image}
@@ -105,7 +123,6 @@ export default function ProductPage() {
             />
           </div>
 
-          {/* Info */}
           <div className="flex flex-col">
             <span className="text-xs font-medium text-red-500 bg-red-500/10 px-3 py-1 rounded-full w-fit">
               {product.category}
@@ -122,7 +139,6 @@ export default function ProductPage() {
               <span className="text-sm text-gray-400">à vista no Pix</span>
             </div>
 
-            {/* Variants selector */}
             {product.variants && product.variants.length > 0 && (
               <div className="mb-6">
                 <p className="text-sm text-gray-400 mb-3">Escolha uma opção:</p>
@@ -147,7 +163,6 @@ export default function ProductPage() {
               </div>
             )}
 
-            {/* Buttons */}
             <div className="flex flex-col gap-3 mb-8">
               <button
                 onClick={handleBuyNow}
@@ -176,7 +191,6 @@ export default function ProductPage() {
           </div>
         </div>
 
-        {/* Description */}
         <div className="mt-12 border-t border-[#1f1f1f] pt-10">
           <h2 className="text-xl font-bold mb-6">Descrição do produto</h2>
           <div className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-6 text-gray-300 whitespace-pre-line text-sm leading-relaxed">
