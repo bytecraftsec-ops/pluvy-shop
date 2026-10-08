@@ -6,7 +6,6 @@ export async function createPixPayment(params: {
   name: string;
   description: string;
   amount: number;
-  externalId?: string;
 }) {
   const res = await fetch(`${BASE_URL}/api/v1/gateway/payment/create-paymnet`, {
     method: "POST",
@@ -18,17 +17,30 @@ export async function createPixPayment(params: {
     body: JSON.stringify({
       name: params.name,
       description: params.description,
-      amount: params.amount,
+      amount: Number(params.amount.toFixed(2)),
       gatewayMethod: "PIX",
     }),
   });
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Sharpify error: ${res.status} - ${text}`);
+  const text = await res.text();
+  let data: any;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    data = { raw: text };
   }
 
-  return res.json();
+  if (!res.ok) {
+    const msg =
+      data?.message ||
+      data?.error?.message ||
+      data?.error ||
+      text ||
+      "Erro desconhecido";
+    throw new Error(`Sharpify ${res.status}: ${typeof msg === "string" ? msg : JSON.stringify(msg)}`);
+  }
+
+  return data;
 }
 
 export async function getPayment(paymentLinkId: string) {

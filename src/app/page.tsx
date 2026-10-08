@@ -19,18 +19,24 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen">
-      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur border-b border-[#1f1f1f]">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center font-bold text-sm">P</div>
-            <span className="font-bold text-xl">Pluvy Shop</span>
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-md border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 py-3.5 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="w-9 h-9 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center font-bold text-sm shadow-lg shadow-red-500/20">
+              P
+            </div>
+            <span className="font-bold text-lg tracking-tight">Pluvy Shop</span>
           </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/carrinho" className="relative text-sm hover:text-red-400 transition">
+          <div className="flex items-center gap-3">
+            <Link
+              href="/carrinho"
+              className="relative text-sm text-gray-300 hover:text-white transition px-3 py-2 rounded-lg hover:bg-white/5"
+            >
               Carrinho
               {count > 0 && (
-                <span className="absolute -top-2 -right-3 bg-red-600 text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-[10px] font-bold w-4.5 h-4.5 min-w-[18px] rounded-full flex items-center justify-center">
                   {count}
                 </span>
               )}
@@ -38,7 +44,7 @@ export default function Home() {
             <a
               href="https://wa.me/5547996245076"
               target="_blank"
-              className="text-sm bg-green-600 hover:bg-green-700 px-4 py-2 rounded-full transition"
+              className="text-sm bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-full transition font-medium"
             >
               WhatsApp
             </a>
@@ -46,69 +52,73 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="max-w-6xl mx-auto px-4 py-12 text-center">
-        <h1 className="text-3xl md:text-5xl font-bold mb-3">
-          Produtos Digitais <span className="text-red-500">Premium</span>
-        </h1>
-        <p className="text-gray-400 max-w-xl mx-auto">
-          Contas, likes, passes e mais. Entrega rápida via WhatsApp após confirmação do Pix.
-        </p>
-      </section>
-
-      <div className="max-w-6xl mx-auto px-4 mb-8">
-        <div className="flex flex-wrap gap-2 justify-center">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-                selectedCategory === cat
-                  ? "bg-red-600 text-white"
-                  : "bg-[#111] text-gray-300 hover:bg-[#1a1a1a] border border-[#1f1f1f]"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+      {/* Categories */}
+      <div className="border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex gap-1 overflow-x-auto py-3 scrollbar-hide">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition ${
+                  selectedCategory === cat
+                    ? "bg-red-600 text-white"
+                    : "text-gray-400 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      <main className="max-w-6xl mx-auto px-4 pb-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {/* Products */}
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
           {filtered.map((product) => (
             <Link
               key={product.id}
               href={`/produto/${product.id}`}
-              className="bg-[#111] border border-[#1f1f1f] rounded-2xl overflow-hidden hover:border-red-600/50 transition group"
+              className="group bg-[#111] border border-white/5 rounded-2xl overflow-hidden hover:border-red-500/40 hover:shadow-xl hover:shadow-red-500/5 transition-all duration-300"
             >
-              <div className="aspect-[4/3] bg-[#0a0a0a] overflow-hidden">
+              <div className="aspect-square bg-[#0a0a0a] overflow-hidden relative">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                 />
-              </div>
-              <div className="p-5">
-                <div className="flex items-start justify-between mb-2">
-                  <span className="text-xs font-medium text-red-500 bg-red-500/10 px-2 py-1 rounded">
+                <div className="absolute top-2 left-2">
+                  <span className="text-[10px] font-semibold text-white bg-black/60 backdrop-blur px-2 py-0.5 rounded-md">
                     {product.category}
                   </span>
-                  <span className="text-lg font-bold text-red-500">
-                    {formatPrice(product.price)}
-                  </span>
                 </div>
-                <h3 className="font-semibold text-base group-hover:text-red-400 transition line-clamp-2">
+              </div>
+              <div className="p-3.5">
+                <h3 className="font-medium text-sm leading-snug line-clamp-2 min-h-[2.5rem] group-hover:text-red-400 transition">
                   {product.name}
                 </h3>
+                <div className="mt-2 flex items-center justify-between">
+                  <div>
+                    <p className="text-[11px] text-gray-500">A partir de</p>
+                    <p className="text-red-500 font-bold text-base">
+                      {formatPrice(product.price)}
+                    </p>
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-white/5 group-hover:bg-red-600 flex items-center justify-center transition">
+                    <svg className="w-4 h-4 text-gray-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
               </div>
             </Link>
           ))}
         </div>
       </main>
 
-      <footer className="border-t border-[#1f1f1f] py-8 text-center text-sm text-gray-500">
-        <p>© 2026 Pluvy Shop — Todos os direitos reservados</p>
-        <p className="mt-1">Suporte via WhatsApp</p>
+      <footer className="border-t border-white/5 py-8 text-center text-sm text-gray-600">
+        <p>© 2026 Pluvy Shop</p>
       </footer>
     </div>
   );
