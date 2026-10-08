@@ -1,52 +1,34 @@
-export type Product = {
+export type Variant = {
   id: string;
   name: string;
   price: number;
+};
+
+export type Product = {
+  id: string;
+  name: string;
+  price: number; // preço base (menor variação)
   category: string;
   description: string;
   image: string;
+  variants?: Variant[];
 };
 
 export const products: Product[] = [
   {
-    id: "ff-likes-1400",
-    name: "1400 Likes Free Fire + Brindes",
+    id: "ff-likes",
+    name: "Likes Free Fire + Brindes",
     price: 12.0,
     category: "Free Fire",
     image: "https://raw.githubusercontent.com/bytecraftsec-ops/pluvy-shop/main/src/imagens/likes%20ff.png",
-    description: `🔥 LIKES PARA FREE FIRE — ENVIO SEGURO VIA ID\n\nDê mais destaque ao seu perfil no Free Fire com curtidas enviadas diretamente pelo seu ID, sem precisar adicionar ninguém como amigo.\n\n⚡ ENVIO DIRETO VIA ID\nPrecisamos apenas do ID da sua conta Free Fire. Não solicitamos senha, e-mail ou código de acesso.\n\n✅ VANTAGENS\n• Preço acessível\n• Processo simples e seguro\n• Envio realizado somente via ID\n• Não precisa adicionar como amigo\n• Limite de 200 likes enviados por dia\n\n📲 COMO FUNCIONA\n1. Finalize a compra do pacote desejado.\n2. Envie o ID correto da sua conta Free Fire no WhatsApp.\n3. Enviaremos 200 likes por dia até completar a quantidade total comprada.\n\n⚠️ INFORMAÇÕES IMPORTANTES\n• O limite máximo de envio é de 200 likes por dia.\n• Pacotes acima de 200 likes serão entregues em etapas.\n• Exemplo: um pacote de 1.400 likes será concluído em até 7 dias.\n• Confira cuidadosamente o ID antes de enviar.\n• Não solicitamos sua senha em nenhum momento.\n• Não nos responsabilizamos por likes enviados para um ID informado incorretamente.`,
-  },
-  {
-    id: "ff-likes-5000",
-    name: "5000 Likes Free Fire + Brindes",
-    price: 30.0,
-    category: "Free Fire",
-    image: "https://raw.githubusercontent.com/bytecraftsec-ops/pluvy-shop/main/src/imagens/likes%20ff.png",
-    description: `🔥 LIKES PARA FREE FIRE — ENVIO SEGURO VIA ID\n\nDê mais destaque ao seu perfil no Free Fire com curtidas enviadas diretamente pelo seu ID.\n\n⚡ ENVIO DIRETO VIA ID\nPrecisamos apenas do ID da sua conta Free Fire. Não solicitamos senha.\n\n✅ VANTAGENS\n• Preço acessível\n• Processo simples e seguro\n• Envio realizado somente via ID\n• Não precisa adicionar como amigo\n• Limite de 200 likes por dia\n\n📲 COMO FUNCIONA\n1. Finalize a compra.\n2. Envie o ID no WhatsApp.\n3. Receba 200 likes por dia até completar.`,
-  },
-  {
-    id: "ff-likes-15000",
-    name: "15000 Likes Free Fire + Brindes",
-    price: 40.0,
-    category: "Free Fire",
-    image: "https://raw.githubusercontent.com/bytecraftsec-ops/pluvy-shop/main/src/imagens/likes%20ff.png",
-    description: `🔥 LIKES PARA FREE FIRE — ENVIO SEGURO VIA ID\n\nEnvio direto via ID. Não precisa adicionar como amigo. Limite de 200 likes por dia.\n\nFinalize a compra e envie o ID no WhatsApp.`,
-  },
-  {
-    id: "ff-likes-25000",
-    name: "25000 Likes Free Fire + Brindes",
-    price: 60.0,
-    category: "Free Fire",
-    image: "https://raw.githubusercontent.com/bytecraftsec-ops/pluvy-shop/main/src/imagens/likes%20ff.png",
-    description: `🔥 LIKES PARA FREE FIRE — ENVIO SEGURO VIA ID\n\nEnvio direto via ID. Não precisa adicionar como amigo. Limite de 200 likes por dia.`,
-  },
-  {
-    id: "ff-likes-30000",
-    name: "30000 Likes Free Fire + Brindes",
-    price: 70.0,
-    category: "Free Fire",
-    image: "https://raw.githubusercontent.com/bytecraftsec-ops/pluvy-shop/main/src/imagens/likes%20ff.png",
-    description: `🔥 LIKES PARA FREE FIRE — ENVIO SEGURO VIA ID\n\nEnvio direto via ID. Não precisa adicionar como amigo. Limite de 200 likes por dia.`,
+    variants: [
+      { id: "ff-likes-1400", name: "1400 Likes + Brindes", price: 12.0 },
+      { id: "ff-likes-5000", name: "5000 Likes + Brindes", price: 30.0 },
+      { id: "ff-likes-15000", name: "15000 Likes + Brindes", price: 40.0 },
+      { id: "ff-likes-25000", name: "25000 Likes + Brindes", price: 60.0 },
+      { id: "ff-likes-30000", name: "30000 Likes + Brindes", price: 70.0 },
+    ],
+    description: `🔥 LIKES PARA FREE FIRE — ENVIO SEGURO VIA ID\n\nDê mais destaque ao seu perfil no Free Fire com curtidas enviadas diretamente pelo seu ID, sem precisar adicionar ninguém como amigo.\n\n⚡ ENVIO DIRETO VIA ID\nPrecisamos apenas do ID da sua conta Free Fire. Não solicitamos senha, e-mail ou código de acesso.\n\n✅ VANTAGENS\n• Preço acessível\n• Processo simples e seguro\n• Envio realizado somente via ID\n• Não precisa adicionar como amigo\n• Limite de 200 likes enviados por dia\n\n📲 COMO FUNCIONA\n1. Escolha o pacote desejado e finalize a compra.\n2. Envie o ID correto da sua conta Free Fire no WhatsApp.\n3. Enviaremos 200 likes por dia até completar a quantidade total comprada.\n\n⚠️ INFORMAÇÕES IMPORTANTES\n• O limite máximo de envio é de 200 likes por dia.\n• Pacotes acima de 200 likes serão entregues em etapas.\n• Exemplo: um pacote de 1.400 likes será concluído em até 7 dias.\n• Confira cuidadosamente o ID antes de enviar.\n• Não solicitamos sua senha em nenhum momento.\n• Não nos responsabilizamos por likes enviados para um ID informado incorretamente.`,
   },
   {
     id: "ff-passe-booyah",
@@ -57,28 +39,17 @@ export const products: Product[] = [
     description: `💎 PASSE BOOYAH PREMIUM (250 DIAMANTES) | FREE FIRE VIA ID\n\nAproveite o Passe Booyah Premium da temporada atual recebendo diretamente pelo correio do jogo.\n\n📌 DETALHES DO PRODUTO\n• 🎮 Jogo: Free Fire\n• 🎁 Item: Passe Booyah Premium (250 Diamantes)\n• 🆔 Envio: 100% via ID (Sistema de Presente Oficial)\n• 🟢 Não precisa adicionar como amigo\n\n📦 COMO FUNCIONA O ENVIO?\n1. Finalize a compra.\n2. Envie seu ID e Nick do Free Fire no WhatsApp.\n3. O passe será enviado como presente e chegará no seu correio do jogo.\n\n⚠️ INFORMAÇÕES IMPORTANTES\n• Válido para o Passe Booyah da temporada em andamento.\n• A conta recebedora precisa estar no mínimo no Nível 10 para aceitar presentes.\n• Confira o ID e Nick antes do envio.`,
   },
   {
-    id: "paramount-7d",
-    name: "Paramount+ Premium 7 Dias",
+    id: "paramount",
+    name: "Paramount+ Premium",
     price: 3.0,
     category: "Streaming",
     image: "https://raw.githubusercontent.com/bytecraftsec-ops/pluvy-shop/main/src/imagens/paramount.png",
-    description: `🎬 PARAMOUNT+ PREMIUM — 7 DIAS\n\nAcesso completo ao catálogo de filmes, séries, esportes ao vivo e produções exclusivas da Paramount+ em resolução 4K Ultra HD.\n\n📌 DETALHES DO SERVIÇO\n• 📺 Qualidade: Imagem em 4K Ultra HD / HD\n• 🔒 Formato: Conta Compartilhada\n• 🚀 Recursos: Assista sem anúncios em Smart TVs, celulares e PCs\n\n📦 RECEBIMENTO\n1. Finalize a compra.\n2. Você receberá os dados de acesso no WhatsApp.\n3. Conecte-se e aproveite.\n\n⚠️ REGRAS ESSENCIAIS\n• Proibido alterar e-mail, senha ou qualquer informação de segurança da conta.\n• Utilize apenas a conta/perfil indicado.`,
-  },
-  {
-    id: "paramount-14d",
-    name: "Paramount+ Premium 14 Dias",
-    price: 5.0,
-    category: "Streaming",
-    image: "https://raw.githubusercontent.com/bytecraftsec-ops/pluvy-shop/main/src/imagens/paramount.png",
-    description: `🎬 PARAMOUNT+ PREMIUM — 14 DIAS\n\nAcesso completo ao catálogo em 4K Ultra HD.\n\n📌 DETALHES\n• Qualidade 4K Ultra HD\n• Conta Compartilhada\n• Assista sem anúncios\n\n⚠️ Proibido alterar e-mail ou senha.`,
-  },
-  {
-    id: "paramount-30d",
-    name: "Paramount+ Premium 30 Dias",
-    price: 6.0,
-    category: "Streaming",
-    image: "https://raw.githubusercontent.com/bytecraftsec-ops/pluvy-shop/main/src/imagens/paramount.png",
-    description: `🎬 PARAMOUNT+ PREMIUM — 30 DIAS\n\nAcesso completo ao catálogo em 4K Ultra HD.\n\n📌 DETALHES\n• Qualidade 4K Ultra HD\n• Conta Compartilhada\n• Assista sem anúncios\n\n⚠️ Proibido alterar e-mail ou senha.`,
+    variants: [
+      { id: "paramount-7d", name: "7 Dias", price: 3.0 },
+      { id: "paramount-14d", name: "14 Dias", price: 5.0 },
+      { id: "paramount-30d", name: "30 Dias", price: 6.0 },
+    ],
+    description: `🎬 PARAMOUNT+ PREMIUM\n\nAcesso completo ao catálogo de filmes, séries, esportes ao vivo e produções exclusivas da Paramount+ em resolução 4K Ultra HD.\n\n📌 DETALHES DO SERVIÇO\n• 📺 Qualidade: Imagem em 4K Ultra HD / HD\n• 🔒 Formato: Conta Compartilhada\n• 🚀 Recursos: Assista sem anúncios em Smart TVs, celulares e PCs\n\n📦 RECEBIMENTO\n1. Escolha o período desejado e finalize a compra.\n2. Você receberá os dados de acesso no WhatsApp.\n3. Conecte-se e aproveite.\n\n⚠️ REGRAS ESSENCIAIS\n• Proibido alterar e-mail, senha ou qualquer informação de segurança da conta.\n• Utilize apenas a conta/perfil indicado.`,
   },
   {
     id: "paramount-conta",

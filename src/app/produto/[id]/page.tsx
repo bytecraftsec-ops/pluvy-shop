@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { getProduct } from "@/lib/products";
+import { getProduct, Variant } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
 import Link from "next/link";
 import { useState } from "react";
@@ -13,6 +13,9 @@ export default function ProductPage() {
   const [added, setAdded] = useState(false);
 
   const product = getProduct(params.id as string);
+  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(
+    product?.variants?.[0] || null
+  );
 
   if (!product) {
     return (
@@ -27,24 +30,40 @@ export default function ProductPage() {
     );
   }
 
+  const currentPrice = selectedVariant?.price ?? product.price;
+  const currentName = selectedVariant
+    ? `${product.name} — ${selectedVariant.name}`
+    : product.name;
+
   function formatPrice(v: number) {
     return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   }
 
   function handleAddToCart() {
-    addToCart(product!);
+    const itemToAdd = {
+      ...product,
+      id: selectedVariant?.id || product.id,
+      name: currentName,
+      price: currentPrice,
+    };
+    addToCart(itemToAdd);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   }
 
   function handleBuyNow() {
-    addToCart(product!);
+    const itemToAdd = {
+      ...product,
+      id: selectedVariant?.id || product.id,
+      name: currentName,
+      price: currentPrice,
+    };
+    addToCart(itemToAdd);
     router.push("/checkout");
   }
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      {/* Header */}
       <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur border-b border-[#1f1f1f]">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
@@ -98,10 +117,35 @@ export default function ProductPage() {
 
             <div className="flex items-center gap-3 mb-6">
               <span className="text-3xl font-bold text-red-500">
-                {formatPrice(product.price)}
+                {formatPrice(currentPrice)}
               </span>
               <span className="text-sm text-gray-400">à vista no Pix</span>
             </div>
+
+            {/* Variants selector */}
+            {product.variants && product.variants.length > 0 && (
+              <div className="mb-6">
+                <p className="text-sm text-gray-400 mb-3">Escolha uma opção:</p>
+                <div className="space-y-2">
+                  {product.variants.map((v) => (
+                    <button
+                      key={v.id}
+                      onClick={() => setSelectedVariant(v)}
+                      className={`w-full text-left px-4 py-3 rounded-xl border transition flex items-center justify-between ${
+                        selectedVariant?.id === v.id
+                          ? "border-red-500 bg-red-500/10"
+                          : "border-[#1f1f1f] bg-[#111] hover:border-[#333]"
+                      }`}
+                    >
+                      <span className="font-medium">{v.name}</span>
+                      <span className="text-red-500 font-semibold">
+                        {formatPrice(v.price)}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Buttons */}
             <div className="flex flex-col gap-3 mb-8">
@@ -119,8 +163,7 @@ export default function ProductPage() {
               </button>
             </div>
 
-            {/* Sidebar info cards */}
-            <div className="space-y-3 mb-8">
+            <div className="space-y-3">
               <div className="bg-[#111] border border-[#1f1f1f] rounded-xl p-4">
                 <p className="font-medium text-sm mb-1">⚡ Entrega via WhatsApp</p>
                 <p className="text-xs text-gray-400">Após confirmação do pagamento você recebe as instruções no WhatsApp.</p>
